@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>postQ / Starter</title>
+    <title>KERI Architecture & Digital Trust Engineering</title>
+    <meta name="description" content="Designing long-term digital trust architectures based on KERI, ACDC, CESR and cryptographic continuity. Consulting in event-log infrastructures, verifiable credentials, distributed trust, and post-quantum migration.">
+    <link rel="icon" type="image/png" href="/favicon.svg">
 
     <style>
 :root {
@@ -99,7 +101,7 @@
       /* ===== CANVAS WRAPPER ===== */
       .canvas-box {
         max-width: 780px;
-        margin: 0 auto 2rem;
+        margin: 0 auto 0;
         border-radius: 18px;
         overflow: hidden;
         border: 1px solid #bfe5d4;
@@ -113,6 +115,15 @@
       .canvas-label,
       #serverCanvas {
         font-family: var(--font-mono) !important;
+      }
+
+      p.canvas-caption {
+        margin: 0 auto 2rem;
+        text-align: center;
+        font-family: "Menlo", "SFMono-Regular", ui-monospace, monospace;
+        font-size: 0.9rem;
+        color: rgba(0, 70, 55, 0.9);
+        opacity: 0.9;
       }
 
       /* ===== BUTTONS ===== */
@@ -298,6 +309,9 @@
         <div class="canvas-box">
           <canvas id="serverCanvas" width="900" height="380"></canvas>
         </div>
+        <p class="canvas-caption">
+        Events flowing through the KERI infrastructure
+        </p>
 
         <div class="cta-row">
           <a class="btn secondary" href="https://cal.com/michalpietrus">Consulting Call</a>
