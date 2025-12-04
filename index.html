@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>postQ / Starter</title>
+
+    <style>
+:root {
+  --font-sans: Inter, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Menlo", "SFMono-Regular", ui-monospace, monospace;
+}
+
+      body {
+        margin: 0;
+        background: #f7f9fa;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: #222;
+      }
+
+      /* ===== HERO SECTION ===== */
+      .hero {
+        padding: 4rem 1.5rem 3rem;
+        background: linear-gradient(#d8f2e4, #c4ebd9);
+        position: relative;
+        overflow: hidden;
+        border-bottom: 1px solid #cde6dc;
+      }
+
+      /* Subtle mesh-like pattern */
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60' fill='none' stroke='rgba(0,120,100,0.15)' stroke-width='1'><path d='M0 30h60M30 0v60'/></svg>");
+        background-size: 60px 60px;
+        opacity: 0.35;
+        animation: drift 35s linear infinite;
+      }
+
+      @keyframes drift {
+        from {
+          transform: translate(0, 0);
+        }
+        to {
+          transform: translate(-120px, -80px);
+        }
+      }
+
+      .hero-inner {
+        max-width: 900px;
+        margin: 0 auto;
+        text-align: center;
+        position: relative;
+        z-index: 5;
+      }
+
+      .hero h1 {
+        font-family: var(--font-sans);
+        font-weight: 800;
+        font-size: clamp(2.4rem, 5vw, 3.6rem);
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+        text-align: left;
+      }
+
+      .hero p {
+        max-width: 650px;
+        margin: 0 auto 1rem;
+        max-width: 680px;
+        opacity: 0.88;
+
+        font-family: var(--font-mono);
+        font-size: clamp(1rem, 1.4vw, 1.18rem);
+        line-height: 1.45;
+        margin: 1rem auto 1.5rem auto;
+      }
+
+      .hero-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1.4rem;
+      }
+
+      @media (max-width: 640px) {
+        .hero-row {
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+      }
+
+      .hero-logo {
+        width: 120px; /* możesz zmienić na co chcesz */
+        height: auto;
+        display: block;
+      }
+
+      /* ===== CANVAS WRAPPER ===== */
+      .canvas-box {
+        max-width: 780px;
+        margin: 0 auto 2rem;
+        border-radius: 18px;
+        overflow: hidden;
+        border: 1px solid #bfe5d4;
+        background: #c8eedc;
+      }
+      #serverCanvas {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+      .canvas-label,
+      #serverCanvas {
+        font-family: var(--font-mono) !important;
+      }
+
+      /* ===== BUTTONS ===== */
+      .cta-row {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .btn {
+        padding: 0.8rem 1.5rem;
+        border-radius: 9999px;
+        font-size: 1rem;
+        cursor: pointer;
+        border: 2px solid #20c997;
+        transition: 0.2s;
+      }
+
+      .btn.primary {
+        background: #20c997;
+        color: white;
+      }
+
+      .btn.secondary {
+        background: white;
+        color: #20c997;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        text-decoration: none !important;
+      }
+
+      .btn.secondary:hover {
+        background: #e7f7f0;              /* delikatnie zielonkawe tło */
+        box-shadow: 0 0 0 3px rgba(32,201,151,0.15);
+        transform: translateY(-1px);
+        text-decoration: none;
+      }
+
+      /* ===== SERVICES ===== */
+      .services {
+        max-width: 1100px;
+        margin: 3rem auto;
+        padding: 1rem 2rem 3rem;
+      }
+
+      .services-subtech {
+        font-family: "Menlo", "SFMono-Regular", ui-monospace, monospace;
+        font-size: 0.95rem;
+        letter-spacing: 0.03em;   
+        font-weight: 500;
+        margin-top: -0.4rem;     
+        margin-bottom: 1.6rem;
+        color: #444;            
+      }
+
+      .section-title {
+        font-family: var(--font-sans);
+        font-weight: 800;
+        font-size: clamp(1.9rem, 3vw, 2.3rem);
+        letter-spacing: -0.015em;
+        margin-bottom: 1.5rem;
+        position: relative;
+      }
+
+
+      .service-card {
+        background: #fdfefc;
+        border-radius: 18px;
+        border: 2px solid #dfe9e4;
+        padding: 1.4rem 1.5rem;
+        box-shadow: 0 6px 0 #c5ded4;
+        transition:
+          transform 0.12s ease-out,
+        box-shadow 0.12s ease-out;
+      }
+
+      .service-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 0 #bdd7cd;
+      }
+
+      .service-card h3 {
+        font-family: var(--font-mono);
+        font-size: 1.05rem;
+        margin: 0 0 0.6rem;
+        letter-spacing: 0.01em;
+      }
+
+      .service-card ul {
+        margin: 0.3rem 0 0;
+        padding-left: 1.1rem;
+        font-size: 0.92rem;
+        line-height: 1.5;
+        font-family: var(--font-mono);
+      }
+
+      .service-card li {
+        margin-bottom: 0.25rem;
+      }
+      .service-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .pixel-sep {
+        height: 4px;
+        width: 120px;
+        margin: 3rem auto 2.5rem;
+        background-image: repeating-linear-gradient(
+          90deg,
+          #20c997 0 8px,
+          transparent 8px 16px
+            );
+      }
+
+      .about-section {
+        text-align: center;
+        background: #f3faf7;
+        border-top: 1px solid rgba(0, 160, 125, 0.12);
+        border-bottom: 1px solid rgba(0, 160, 125, 0.12);
+      }
+
+      .about-inner {
+        margin: 4rem auto 5rem;
+        max-width: 720px;
+        padding: 0 1.5rem;
+      }
+
+      .about-text {
+        font-family: "Menlo", "SFMono-Regular", ui-monospace, monospace;
+        font-size: 1rem;
+        line-height: 1.55;
+        opacity: 0.9;
+        margin-bottom: 1.2rem;
+        color: #1f2a26;
+      }
+
+      .site-footer {
+        background: #ffffff;
+        border-top: 1px solid rgba(0, 0, 0, 0.06);
+        padding: 1.4rem 1.5rem;
+        margin-top: 0; /* jeśli coś Ci dodaje gap nad footerem, możesz to skorygować */
+      }
+
+      .footer-inner {
+        max-width: 1024px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        font-family: "Menlo", "SFMono-Regular", ui-monospace, monospace;
+        font-size: 0.85rem;
+        color: #555;
+      }
+
+
+      @media (max-width: 640px) {
+        .footer-inner {
+          flex-direction: column;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-row">
+          <img src="./blocks.png" alt="KERI Knight Logo" class="hero-logo" />
+          <h1 class="hero-title">Simplifying<br />the KERI Suite</h1>
+        </div>
+        <p class="hero-subtext">
+        From design to implementation, I translate KERI and ACDC into
+        practical, long-term solutions that strengthen identity, continuity,
+        and verification.
+        </p>
+
+        <div class="canvas-box">
+          <canvas id="serverCanvas" width="900" height="380"></canvas>
+        </div>
+
+        <div class="cta-row">
+          <a class="btn secondary" href="https://cal.com/michalpietrus">Consulting Call</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SERVICES ================= -->
+    <section class="services">
+      <h2 class="services-title">Consulting Services</h2>
+      <h5 class="services-subtech">• KERI • ACDC • KEL • TEL • CESR • </h5>
+
+      <div class="service-grid">
+        <div class="service-card">
+          <h3>KERI / ACDC Architecture</h3>
+          <ul>
+            <li>Architecture design for verifiable, continuous identities</li>
+            <li>Modeling event provenance and credential structures</li>
+            <li>Integrating KERI/ACDC into existing systems</li>
+          </ul>
+        </div>
+        <div class="service-card">
+          <h3>Hierarchical Trust Models</h3>
+          <ul>
+            <li>Bootstrapping KERI-based trust infrastructure</li>
+            <li>Combining X.509 PKI with KERI</li>
+            <li>Post-quantum readiness</li>
+            <li>
+              <a
+                  href="https://medium.com/@Es03bA6MXWizQJRq9DokiT6pBeibTy/trust-that-expires-mapping-the-longevity-horizon-bcb7762d1597"
+                  >Designing trust models that "do not expire"</a
+                >
+            </li>
+          </ul>
+        </div>
+        <div class="service-card">
+          <h3>From Design to Deployment</h3>
+          <ul>
+            <li>Turning trust models into executable logic</li>
+            <li>Preparing systems for real-world operation</li>
+            <li>Ensuring clean rollout and predictable behavior</li>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="about-section">
+      <div class="about-inner">
+        <h2 class="section-title">About Me</h2>
+        <p class="about-text">
+        I am <a href="https://www.linkedin.com/in/michalpietrus/">Michal</a> and I work on the parts of the internet most people never see: identity continuity, event logs, cryptographic migration paths, and the systems that connect them.
+        </p>
+        <p class="about-text">
+        If something must remain trustworthy tomorrow,
+        I design how it works today.
+        </p>
+      </div>
+    </section>
+
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span>© 2025 kerisuite.dev</span>
+      </div>
+    </footer>
+    <!-- ================= CANVAS SCRIPT ================= -->
+    <script>
+      (function () {
+        const canvas = document.getElementById("serverCanvas");
+        const ctx = canvas.getContext("2d");
+
+        // helper – wyrównanie do całych px
+        function snap(v) {
+          return Math.round(v);
+        }
+
+        // --- NODES (0..1) ---
+        const nodes = [
+          { x: 0.07, y: 0.3 },
+          { x: 0.3, y: 0.27 },
+          { x: 0.8, y: 0.3 },
+          { x: 0.23, y: 0.72 },
+          { x: 0.75, y: 0.75 },
+          { x: 0.95, y: 0.5 },
+          { x: 0.4, y: 0.5 },
+          { x: 0.88, y: 0.12 },
+          { x: 0.92, y: 0.88 },
+          { x: 0.14, y: 0.85 },
+        ];
+
+        const edges = [
+          [0, 1],
+          [0, 3],
+          [0, 6],
+          [0, 9],
+          [1, 2],
+          [2, 4],
+          [6, 4],
+          [4, 5],
+          [4, 2],
+          [3, 4],
+          [2, 7],
+          [4, 8],
+          [9, 4],
+        ];
+
+        // role wg pozycji X (pierwsze 7, reszta bez labeli)
+        const order = nodes
+          .map((n, i) => ({ i, x: n.x }))
+          .sort((a, b) => a.x - b.x)
+          .map((o) => o.i);
+
+        const labelsByRank = [
+          null,
+          "witness",
+          "witness",
+          "witness",
+          "witness",
+          "watcher",
+          "watcher",
+          null,
+        ];
+
+        order.forEach((idx, rank) => {
+          nodes[idx].role = labelsByRank[rank] || null;
+        });
+
+        let W = 900;
+        let H = 400;
+        let pixel = 4;
+        let scale = 1;
+        let zoneFontSize = 16;
+        let nodeFontSize = 12;
+        let nodeLabelOffsetY = 32;
+        let dpr = window.devicePixelRatio || 1;
+
+        function resizeCanvas() {
+          const rect = canvas.parentElement.getBoundingClientRect();
+          dpr = window.devicePixelRatio || 1;
+
+          W = rect.width;
+          H = rect.width * 0.45; // proporcje
+
+          canvas.width = W * dpr;
+          canvas.height = H * dpr;
+
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          ctx.imageSmoothingEnabled = false;
+
+          scale = W / 900;
+
+          // integer pixel size (ważne dla ostrości)
+          pixel = Math.max(2, Math.round(4 * scale));
+
+          zoneFontSize = Math.round(Math.max(10, 20 * scale));
+          nodeFontSize = Math.round(Math.max(8, 14 * scale));
+          nodeLabelOffsetY = 22 * scale + 12;
+
+          // przelicz fizyczne współrzędne node’ów na canvasie
+          nodes.forEach((n) => {
+            n.px = snap(n.x * W);
+            n.py = snap(n.y * H);
+          });
+        }
+
+        const serverSprite = [
+          [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+          [0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0],
+          [1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 2, 1],
+          [1, 2, 3, 4, 4, 3, 3, 4, 4, 3, 2, 1],
+          [1, 2, 3, 4, 4, 3, 3, 4, 4, 3, 2, 1],
+          [1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 2, 1],
+          [1, 2, 5, 0, 0, 5, 5, 0, 0, 5, 2, 1],
+          [1, 2, 6, 0, 0, 6, 6, 0, 0, 6, 2, 1],
+          [1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 2, 1],
+          [0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0],
+          [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+        ];
+
+        const palette = {
+          1: "#202020",
+          2: "#f2f2f2",
+          3: "#c9f4e3",
+          4: "#94e8c7",
+          5: "#2ecc71",
+          6: "#e74c3c",
+        };
+
+        function drawPixelServer(cx, cy) {
+          const spriteW = serverSprite[0].length;
+          const spriteH = serverSprite.length;
+
+          const startX = snap(cx - (spriteW * pixel) / 2);
+          const startY = snap(cy - (spriteH * pixel) / 2);
+
+          for (let y = 0; y < spriteH; y++) {
+            for (let x = 0; x < spriteW; x++) {
+              const c = serverSprite[y][x];
+              if (c !== 0) {
+                ctx.fillStyle = palette[c];
+                ctx.fillRect(
+                  startX + x * pixel,
+                  startY + y * pixel,
+                  pixel,
+                  pixel,
+                );
+              }
+            }
+          }
+        }
+
+        function drawNetworkZones() {
+          const midX = W * 0.5;
+          const pad = 12 * scale;
+
+          ctx.fillStyle = "rgba(255,255,255,0.22)";
+          ctx.fillRect(
+            snap(pad),
+            snap(pad),
+            snap(midX - pad * 2),
+            snap(H - pad * 2),
+          );
+          ctx.fillRect(
+            snap(midX + pad),
+            snap(pad),
+            snap(W - midX - pad * 2),
+            snap(H - pad * 2),
+          );
+
+          ctx.strokeStyle = "rgba(191,229,212,0.9)";
+          ctx.lineWidth = 1;
+          ctx.strokeRect(
+            snap(pad + 0.5),
+            snap(pad + 0.5),
+            snap(midX - pad * 2),
+            snap(H - pad * 2),
+          );
+          ctx.strokeRect(
+            snap(midX + pad + 0.5),
+            snap(pad + 0.5),
+            snap(W - midX - pad * 2),
+            snap(H - pad * 2),
+          );
+
+          ctx.font = `${zoneFontSize}px "Menlo","SFMono-Regular",monospace`;
+          ctx.fillStyle = "rgba(0,80,60,0.85)";
+          ctx.fillText("Controller network", snap(pad * 1.4), snap(pad * 2.6));
+          ctx.fillText(
+            "Validator network",
+            snap(midX + pad * 1.4),
+            snap(pad * 2.6),
+          );
+        }
+
+        function drawEdges(t) {
+          ctx.lineWidth = 2 * scale;
+          ctx.strokeStyle = "rgba(40,160,120,0.5)";
+
+          edges.forEach(([aIdx, bIdx], i) => {
+            const A = nodes[aIdx];
+            const B = nodes[bIdx];
+
+            const ax = A.px;
+            const ay = A.py;
+            const bx = B.px;
+            const by = B.py;
+
+            ctx.beginPath();
+            ctx.moveTo(ax, ay);
+            ctx.lineTo(bx, by);
+            ctx.stroke();
+
+            const tt = (t / 1000 + i * 0.25) % 1;
+            const pxPos = ax + (bx - ax) * tt;
+            const pyPos = ay + (by - ay) * tt;
+
+            ctx.fillStyle = "#20c997";
+            const r = Math.max(2, Math.round(pixel * 1.4));
+            ctx.fillRect(snap(pxPos - r / 2), snap(pyPos - r / 2), r, r);
+          });
+        }
+
+        function drawLabels() {
+          ctx.font = `${nodeFontSize}px "Menlo","SFMono-Regular",monospace`;
+          ctx.fillStyle = "rgba(0,70,55,0.9)";
+
+          nodes.forEach((n) => {
+            if (!n.role) return;
+
+            const tx = snap(n.px - 20 * scale);
+            const ty = snap(n.py + nodeLabelOffsetY);
+
+            ctx.fillText(n.role, tx, ty);
+          });
+        }
+
+        function render(t) {
+          ctx.clearRect(0, 0, W, H);
+
+          drawNetworkZones();
+          drawEdges(t);
+
+          nodes.forEach((n) => {
+            drawPixelServer(n.px, n.py);
+          });
+
+          drawLabels();
+
+          requestAnimationFrame(render);
+        }
+
+        resizeCanvas();
+        window.addEventListener("resize", resizeCanvas);
+        requestAnimationFrame(render);
+      })();
+    </script>
+  </body>
+</html>
